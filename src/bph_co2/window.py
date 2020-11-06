@@ -13,8 +13,8 @@ class Window(object):
         self.state = kwargs.get('state', 0)                     # state of the window; 0: closed, 1: tilted; 2: opened
         self.c_ref = kwargs.get('c_ref', 100)                   # Austauschkoeffizient [m^0.5 / h * K^0.5]
 
-        self._a_tilted = kwargs.get('_a_tilted', None)           # effective ventilation area for tilted window [m²]
-        self._a_opened = kwargs.get('_a_opened', None)           # effective ventilation area for opened window [m²]
+        self._a_tilted = kwargs.get('a_tilted', None)           # effective ventilation area for tilted window [m²]
+        self._a_opened = kwargs.get('a_opened', None)           # effective ventilation area for opened window [m²]
 
     @property
     def a_tilted(self):

@@ -1,8 +1,8 @@
 ============================================================
-bph2_co2: Educational tool for co2_concentration simulations
+bph2_co2: Educational tool for CO2 concentration simulations
 ============================================================
 
-Python library for education with tools for co2 concentration simulations
+Python library for education with tools for CO2 concentration simulations
 
 Usage
 -----
@@ -16,7 +16,7 @@ Imports:
     from src.bph_co2.timeseries import Timeseries
     from src.bph_co2.window import Window
 
-Create CO2_Simulation Object:
+CO2_Simulation Objects:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - create a CO2_Simulation object. This is the base for running a simulation:
@@ -25,19 +25,33 @@ Create CO2_Simulation Object:
 
     sim = CO2_Simulation(name='my_test_simulation')
 
-Create timeseries objects:
+The CO2_Simulation has the following parameters:
+    - name:                         the name of the CO2_Simulation; default is 'Unnamed Simulation'
+    - volume:                       the volume of the simulated zone [m³]; default is 75
+    - n_persons:                    number of persons in the zone; default is 1
+    - co2_emission_rate:            CO2 emission_rate of a person
+    - a_tilted: effective ventilation area for tilted window [m²]; default is calculated from the window geometry
+    - a_opened: effective ventilation area for opened window [m²]; default is calculated from the window geometry
+
+All parameters can be set on initialization or afterwards.
+
+Timeseries Objects:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - A Timeseries handles data and returns a value / values for a time [s]. A Timeseries can handle static values (int, float, etc..), numpy arrays (first column has to be the time in [s]) or pd.Dataframes (index must be the time).
 
-Create a timeseries object with static value (integer):
+- Timeseries objects can interpolate Data in different ways. To specify interpolation scheme pass keyword *interpolation_scheme* with:
+    - 'linear': linear interpolation
+    - 'previous': closest previous value (for example for persons)
+
+- Create a timeseries object with static value (integer):
 
 .. code-block:: python
 
     n_persons = Timeseries(data=1)
 
 
-Create a timeseries object with np.array:
+- Create a timeseries object with np.array:
 
 .. code-block:: python
 
@@ -47,7 +61,7 @@ Create a timeseries object with np.array:
     n_persons = Timeseries(data=array)
 
 
-Create a timeseries object with pd.Dataframe:
+- Create a timeseries object with pd.Dataframe:
 
 .. code-block:: python
 
@@ -59,14 +73,54 @@ Create a timeseries object with pd.Dataframe:
                        'n_persons': array[1,:]})
     df.set_index('Time', inplace=True)
 
-    n_persons = Timeseries(data=array)
+    n_persons = Timeseries(data=array, interpolation_scheme='linear')
+
+- Create a timeseries object from .csv file:
 
 .. code-block:: python
 
-    n_persons = Timeseries.from_csv(persons_filename, interpolation_scheme='previous')
+    n_persons = Timeseries.from_csv('test.csv', interpolation_scheme='previous')
 
 
--
+Windows:
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In the Simulation windows can be added. Windows create additional air change in the zone dependent of the indoor- and outdoor-temperatures, the opening state and the geometry.
+
+The window can have three states:
+    - 0: closed
+    - 1: tilted
+    - 2: opened
+
+The window has the following parameters:
+    - hight:    the hight of the window [m]; default is 1
+    - area:     the area of the window [m²]; default is 1
+    - state:    state of the window; 0: closed, 1: tilted; 2: opened; default is 0 (closed)
+    - c_ref:    Austauschkoeffizient [m^0.5 / h * K^0.5], default is 100
+    - a_tilted: effective ventilation area for tilted window [m²]; default is calculated from the window geometry
+    - a_opened: effective ventilation area for opened window [m²]; default is calculated from the window geometry
+
+- Create a window:
+
+
+.. code-block:: python
+
+    from src.bph_co2.window import Window
+
+    window_state = Timeseries.from_csv('window_state.csv', interpolation_scheme='previous')
+
+    window = Window(hight=1,
+                    area=1,
+                    state=window_state)
+
+- Add window to the simulation:
+
+The windows are specified as a list of window objects:
+
+.. code-block:: python
+
+    sim.windows = [window]
+
 
 
 Create a class:
