@@ -1,66 +1,73 @@
-================================
-bph2_co2_concentration: Educational tool for co2_concentration simulations
-================================
+============================================================
+bph2_co2: Educational tool for co2_concentration simulations
+============================================================
 
-Python library for education with tools for co2_concentration simulations
+Python library for education with tools for co2 concentration simulations
 
 Usage
 -----
 
 Imports:
-^^^^^^^^^^^^^
+^^^^^^^^
 
 .. code-block:: python
 
-    import uuid
-    import numpy as np
-    from itertools import count
-    from udbs import db_handler, BaseClass, ObserverDBMeta
-    from sqlalchemy import Integer, String
-    from udbs.db_types import (Pandas_DBType,
-                               Universal_DBType,
-                               List_DBType,
-                               DB_List,
-                               TrackedList,
-                               TrackedDataFrame,
-                               Integer_DBType,
-                               TrackedInteger,
-                               TrackedFloat,
-                               DB_Tuple,
-                               Tuple_DBType,
-                               TrackedTuple,
-                               DB_NPNDARRAY,
-                               Numpy_DBType,
-                               Tracked_NDARRAY
-                               )
+    from src.bph_co2.solver import CO2_Simulation, ppm_to_mg_m3, mg_m3_to_ppm
+    from src.bph_co2.timeseries import Timeseries
+    from src.bph_co2.window import Window
 
-    # do not echo sqlalchemy output
-    db_handler.echo = False
+Create CO2_Simulation Object:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    # do not profile execution
-    db_handler.profile = False
-
-
-Create Databases:
-^^^^^^^^^^^^^^^^^
-
-- create or connect to a database:
+- create a CO2_Simulation object. This is the base for running a simulation:
 
 .. code-block:: python
 
-    db = db_handler.create_db(name='database_1',
-                          dialect='sqlite',
-                          database=r'C:\udbs\db_test.db'
-                          )
+    sim = CO2_Simulation(name='my_test_simulation')
 
-- create or connect to a second database:
+Create timeseries objects:
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- A Timeseries handles data and returns a value / values for a time [s]. A Timeseries can handle static values (int, float, etc..), numpy arrays (first column has to be the time in [s]) or pd.Dataframes (index must be the time).
+
+Create a timeseries object with static value (integer):
 
 .. code-block:: python
 
-    db2 = db_handler.create_db(name='database_2',
-                               dialect='sqlite',
-                               database=r'C:\udbs\db_test_2.db'
-                               )
+    n_persons = Timeseries(data=1)
+
+
+Create a timeseries object with np.array:
+
+.. code-block:: python
+
+    array = array = np.empty((2,100))
+    array[0,:] = np.arange(array.shape[1])
+    array[1,:] = np.random.rand(array.shape[1])
+    n_persons = Timeseries(data=array)
+
+
+Create a timeseries object with pd.Dataframe:
+
+.. code-block:: python
+
+    array = array = np.empty((2,100))
+    array[0,:] = np.arange(array.shape[1])
+    array[1,:] = np.random.rand(array.shape[1])
+
+    df = pd.DataFrame({'Time': array[0,:],
+                       'n_persons': array[1,:]})
+    df.set_index('Time', inplace=True)
+
+    n_persons = Timeseries(data=array)
+
+.. code-block:: python
+
+    n_persons = Timeseries.from_csv(persons_filename, interpolation_scheme='previous')
+
+
+-
+
 
 Create a class:
 ^^^^^^^^^^^^^^^
