@@ -134,7 +134,9 @@ class CO2_Simulation(object):
                      e=e,
                      internal_co2_source=internal_co2_source,
                      q=q,
-                     air_change_rate=air_change_rate)
+                     air_change_rate=air_change_rate,
+                     outdoor_temperature=outdoor_temperature,
+                     indoor_temperature=indoor_temperature)
 
         return res
 
@@ -152,6 +154,8 @@ class Result(object):
         self.e = kwargs.get('e', None)                                          # CO2 emission in the room/zone in ppm
         self.q = kwargs.get('q', None)                                          # fresh air volume flow
         self.air_change_rate = kwargs.get('air_change_rate', None)              # air_change_rate
+        self.outdoor_temperature = kwargs.get('outdoor_temperature', None)      # outdoor_temperature [°C]
+        self.indoor_temperature = kwargs.get('indoor_temperature', None)        # indoor_temperature [°C]
 
         self._df = None
 
@@ -159,14 +163,16 @@ class Result(object):
     def df(self):
         if self._df is None:
 
-            self._df = pd.DataFrame({'Time': self.time,
-                                     'n_persons': self.n_persons[0:self.time.shape[0]],
-                                     'CO2_ppm': self.ci_ppm[0:self.time.shape[0]],
-                                     'CO2_mg_m3': self.ci_mg_m3[0:self.time.shape[0]],
-                                     'e': self.e[0:self.time.shape[0]],
-                                     'internal CO2 source': self.internal_co2_source[0:self.time.shape[0]],
-                                     'fresh air volume flow': self.q[0:self.time.shape[0]],
-                                     'air change rate': self.air_change_rate[0:self.time.shape[0]]}
+            self._df = pd.DataFrame({'Time [s]': self.time,
+                                     'Number of Persons': self.n_persons[0:self.time.shape[0]],
+                                     'CO2 [ppm]': self.ci_ppm[0:self.time.shape[0]],
+                                     'CO2 [mg/m³]': self.ci_mg_m3[0:self.time.shape[0]],
+                                     'Total CO2 emission [mg/h]': self.e[0:self.time.shape[0]],
+                                     'Internal CO2 source [mg/h]': self.internal_co2_source[0:self.time.shape[0]],
+                                     'Total fresh air volume flow [m³/h]': self.q[0:self.time.shape[0]],
+                                     'Air change rate [1/h]': self.air_change_rate[0:self.time.shape[0]],
+                                     'Outdoor temperature [°C]': self.outdoor_temperature[0:self.time.shape[0]],
+                                     'Indoor temperature [°C]': self.indoor_temperature[0:self.time.shape[0]]}
                                     )
 
         return self._df

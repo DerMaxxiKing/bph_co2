@@ -8,7 +8,7 @@ project_dir = Path(__file__).parent
 
 setuptools.setup(
     name="bph2_co2",
-    version="0.0.1",
+    version="1.0.0",
     description="Educational tool for co2_concentration simulations",
     # Allow UTF-8 characters in README with encoding argument.
     long_description=project_dir.joinpath("README.rst").read_text(encoding="utf-8"),
@@ -20,7 +20,7 @@ setuptools.setup(
     # pip 9.0+ will inspect this field when installing to help users install a
     # compatible version of the library for their Python version.
     python_requires=">=3.7",
-    setup_requires=["wheel"],
+    setup_requires=["wheel", "twine"],
     # There are some peculiarities on how to include package data for source
     # distributions using setuptools. You also need to add entries for package
     # data to MANIFEST.in.

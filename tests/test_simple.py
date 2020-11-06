@@ -64,5 +64,3 @@ sim = CO2_Simulation(volume=volume,
 res = sim.calculate()
 
 res.plot()
-
-print(c0_mg_m3)
