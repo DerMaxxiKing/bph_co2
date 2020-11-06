@@ -4,6 +4,8 @@ bph2_co2: Educational tool for CO2 concentration simulations
 
 Python library for education with tools for CO2 concentration simulations
 
+.. image:: https://raw.githubusercontent.com/bph-tuwien/bph_co2/docs/screenshot_1.PNG?sanitize=true
+
 Usage
 -----
 
@@ -26,14 +28,23 @@ CO2_Simulation Objects:
     sim = CO2_Simulation(name='my_test_simulation')
 
 The CO2_Simulation has the following parameters:
-    - name:                         the name of the CO2_Simulation; default is 'Unnamed Simulation'
-    - volume:                       the volume of the simulated zone [m³]; default is 75
-    - n_persons:                    number of persons in the zone; default is 1
-    - co2_emission_rate:            CO2 emission_rate of a person
-    - a_tilted: effective ventilation area for tilted window [m²]; default is calculated from the window geometry
-    - a_opened: effective ventilation area for opened window [m²]; default is calculated from the window geometry
+
+    - *name*:                         the name of the CO2_Simulation; default is 'Unnamed Simulation'
+    - *volume*:                       the volume of the simulated zone [m³]; default is 75
+    - *n_persons*:                    number of persons in the zone; default is 1 *
+    - *co2_emission_rate*:            CO2 emission_rate of a person in mg/h; default is 27000 mg/h;
+    - *internal_co2_source*:          co2 emission rate of internal sources in mg/h; default is 0 *
+    - *outdoor_temperature*:          outdoor temperature in °C; default is 10 °C *
+    - *indoor_temperature*:           indoor temperature in °C; default is 20 °C *
+    - *windows*:                      windows of the zone; list of *window*-objects; default is []
+    - *air_change_rate*:              air change rate in 1/h; default is 0.5 *
+    - *c0i*:                          initial CO2-concentration in the room/zone in ppm; default is 400
+    - *c0e*:                          initial outdoor CO2-concentration in ppm; default is 400
+    - *timestep*:                     simulation timestep [s]; default is 360
+    - *t_end*:                        end time of the simulation
 
 All parameters can be set on initialization or afterwards.
+* Parameters can be Timeseries objects
 
 Timeseries Objects:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
