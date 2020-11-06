@@ -13,24 +13,7 @@ from bph_co2.resources import Input_Data as case_data
 
 if __name__ == '__main__':
 
-    c0 = 1  # ppm
-    c0_mg_m3 = ppm_to_mg_m3(c0)
-
-    volume = 51.48
-    emission_rate = 27000
-    time = 0
-
-    outdoor_temperature = 10
-    indoor_temperature = 20
-
-    # initial state:
-
-    c0 = 400  # initial CO2-concentration in the room / zone
-    t0 = 20  # initial temperature in the room / zone
-
-    timestep = 60  # timestep [s]
-    t_end = 10800  # End time [s]
-
+    # load .csv files
     with pkg_resources.path(case_data, 'persons.csv') as path:
         persons_filename = path.__str__()
 
@@ -56,6 +39,7 @@ if __name__ == '__main__':
     indoor_temperature = Timeseries.from_csv(indoor_temperature_filename, interpolation_scheme='linear')
     outdoor_temperature = Timeseries.from_csv(outdoor_temperature_filename, interpolation_scheme='linear')
 
+    # create a window:
     window = Window(hight=1,
                     area=1,
                     state=window_state)
