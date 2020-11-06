@@ -8,7 +8,7 @@ project_dir = Path(__file__).parent
 
 setuptools.setup(
     name="bph2_co2",
-    version="1.0.1",
+    version="1.0.2",
     description="Educational tool for co2_concentration simulations",
     # Allow UTF-8 characters in README with encoding argument.
     long_description=project_dir.joinpath("README.rst").read_text(encoding="utf-8"),
