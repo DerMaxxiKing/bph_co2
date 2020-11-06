@@ -4,7 +4,7 @@ bph2_co2: Educational tool for CO2 concentration simulations
 
 Python library for education with tools for CO2 concentration simulations
 
-.. image:: https://raw.githubusercontent.com/bph-tuwien/bph_co2/docs/screenshot_1.PNG?sanitize=true
+.. image:: https://raw.githubusercontent.com/bph-tuwien/bph_co2/blob/master/docs/screenshot_1.PNG?sanitize=true
 
 Usage
 -----
