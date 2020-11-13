@@ -12,7 +12,6 @@ class Window(Wall):
         # siehe ÖNORM 8110-3
 
         self.hight = kwargs.get('hight', 1)                     # hight of the window [m]
-        self.area = kwargs.get('hight', 1)                      # area of the window [m]
         self.state = kwargs.get('state', 0)                     # state of the window; 0: closed, 1: tilted; 2: opened
         self.c_ref = kwargs.get('c_ref', 100)                   # Austauschkoeffizient [m^0.5 / h * K^0.5]
 

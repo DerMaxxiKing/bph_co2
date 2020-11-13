@@ -5,6 +5,7 @@ from src.bph_co2.ventilation import Ventilation
 from src.bph_co2.timeseries import Timeseries
 from src.bph_co2.solver import Solver
 from src.bph_co2.window import Window
+import sys
 import multiprocessing as mp
 
 try:
@@ -142,4 +143,4 @@ if __name__ == '__main__':
                     )
     res = solver.calc_transient_co2_temperature()
     res.plot()
-    pass
+    sys.exit()

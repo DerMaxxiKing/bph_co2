@@ -1,10 +1,13 @@
-import pandas as pd
 import numpy as np
+from .zone import BaseZone
+from .wall import Wall
 
 
-class Window(object):
+class Window(Wall):
 
     def __init__(self, *args, **kwargs):
+
+        Wall.__init__(self, *args, **kwargs)
 
         # siehe ÖNORM 8110-3
 
@@ -15,6 +18,28 @@ class Window(object):
 
         self._a_tilted = kwargs.get('a_tilted', None)           # effective ventilation area for tilted window [m²]
         self._a_opened = kwargs.get('a_opened', None)           # effective ventilation area for opened window [m²]
+
+    @property
+    def side1(self):
+        return self._side_1
+
+    @side1.setter
+    def side1(self, value):
+        self._side_1 = value
+
+        if isinstance(self._side_1, BaseZone):
+            self._side_1.add_window(self)
+
+    @property
+    def side2(self):
+        return self._side_2
+
+    @side2.setter
+    def side2(self, value):
+        self._side_2 = value
+
+        if isinstance(self._side_2, BaseZone):
+            self._side_2.add_window(self)
 
     @property
     def a_tilted(self):
@@ -31,7 +56,7 @@ class Window(object):
     def q(self, t_i=20, t_e=10, time=0):
 
         if hasattr(self.state, 'current_value'):
-            state = self.state.current_value(time).values
+            state = self.state.current_value(time)
         else:
             state = self.state
 

@@ -8,7 +8,7 @@ from src.bph_co2.solver import Solver
 # create ambient
 
 ambient = Ambient(name='outside',
-                  theta=30)
+                  theta=-10)
 
 ventilation = Ventilation(t_ex=ambient.theta)
 
@@ -16,8 +16,8 @@ ventilation = Ventilation(t_ex=ambient.theta)
 
 zone = ThermalZone(volume=6 * 6 * 2.6,
                    ventilation=ventilation,
-                   phi_int_c=4*200 + 4 * 100,
-                   phi_hc_id=-1000)
+                   phi_int_c=4 * 200 + 4 * 100,
+                   phi_hc_id=500 * 0.7)
 
 
 window1 = Wall(theta_in=None,
@@ -27,7 +27,7 @@ window1 = Wall(theta_in=None,
                r_se=0.04,
                _orientation='vertical',
                name='windows',
-               area=(1.6 * 1.3)*2,
+               area=(1.6 * 1.3)*4,
                alpha_k=2.5,
                side1=zone)
 
@@ -45,7 +45,7 @@ outside_wall1 = Wall(theta_in=None,
 
 inside_wall1 = Wall(theta_in=None,
                     theta_out=None,
-                    theta_s=24,
+                    theta_s=20,
                     r_si=0.13,
                     u=0.2,
                     r_se=0.04,
@@ -56,12 +56,12 @@ inside_wall1 = Wall(theta_in=None,
                     side1=zone)
 
 floor = Wall(theta_in=25,
-             theta_out=15,
+             theta_out=10,
              u=0.35,
              r_se=0.04,
              orientation='floor',
              name='floor',
-             area=5*5,
+             area=6*6,
              side1=zone)
 
 ceiling = Wall(theta_in=25,
@@ -70,7 +70,7 @@ ceiling = Wall(theta_in=25,
                r_se=0.04,
                orientation='ceiling',
                name='ceiling',
-               area=5*5,
+               area=6*6,
                side1=zone)
 
 
