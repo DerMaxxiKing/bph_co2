@@ -1,0 +1,3 @@
+[console_scripts]
+udbs = udbs.cli:main
+
